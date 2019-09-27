@@ -33,18 +33,19 @@ var mb = {
     init: function (elem) {
         mb.data.elem = document.getElementById(elem);
         mb.data.current.primary = Math.floor((Math.random() * mb.data.colors.length));
+
+        if (mb.data.current.primary === mb.data.colors.length + 1) {
+            alert("working");
+        }
+
         mb.data.current.secondary = Math.floor((Math.random() * mb.data.colors.length));
         mb.data.current.darkness = Math.floor((Math.random() * 5));
         mb.data.current.maxElem = Math.floor((Math.random() * 8) + 4);
         mb.data.current.bgIsLight = Math.round((Math.random() * 1));
         mb.data.current.globalSkew = Math.floor((Math.random() * 20) + 0);
-
         mb.data.elem.style.backgroundColor = mb.data.colors[mb.data.current.primary][mb.data.current.darkness];
 
-        //secondary background.
         mb.genLoop();
-
-        mb.data.elem.innerHTML = mb.data.generated;
     },
     genLoop: function () {
         var loopComplete = false;

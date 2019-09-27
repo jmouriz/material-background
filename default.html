@@ -1,0 +1,96 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+
+    <title>material-background</title>
+    <meta name="description" content="oh?">
+    <meta name="author" content="James Williams">
+
+    <link rel="stylesheet" href="css/material-background.css">
+
+    <style>
+        #credits {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            padding: 12px;
+            z-index: 1000;
+            border-radius: 6px;
+            color: white;
+            font-weight: 100;
+            text-decoration: none;
+
+            background: linear-gradient(50deg, #2b7cb6, #ffb6c1);
+            background-size: 400% 400%;
+
+            -webkit-animation: gradientAnim 16s ease infinite;
+            -moz-animation: gradientAnim 16s ease infinite;
+            animation: gradientAnim 16s ease infinite;
+
+            transition: all 1s ease;
+        }
+
+        #credits:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        @-webkit-keyframes gradientAnim {
+            0% {
+                background-position: 0% 88%
+            }
+
+            50% {
+                background-position: 100% 13%
+            }
+
+            100% {
+                background-position: 0% 88%
+            }
+        }
+
+        @-moz-keyframes gradientAnim {
+            0% {
+                background-position: 0% 88%
+            }
+
+            50% {
+                background-position: 100% 13%
+            }
+
+            100% {
+                background-position: 0% 88%
+            }
+        }
+
+        @keyframes gradientAnim {
+            0% {
+                background-position: 0% 88%
+            }
+
+            50% {
+                background-position: 100% 13%
+            }
+
+            100% {
+                background-position: 0% 88%
+            }
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body onload="mb.init('mb');">
+    <div id="mb">
+
+    </div>
+    <a href="https://jameswilliams.codes/" id="credits">
+        Made by James Williams
+    </a>
+    <script src="js/material-background.js">
+    </script>
+</body></html>
