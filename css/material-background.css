@@ -61,15 +61,20 @@ body {
     z-index: 100;
 }
 
-#material-background .material-circle-small {
-    margin-top: -30px;
-    margin-left: -30px;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    background-color: #F44336;
+.mb-circle {
     position: absolute;
-    z-index: 200;
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.mb-horizontal-stripe {
+    position: absolute;
+    width: 100%;
+    transform: skewY(0deg);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 #material-background .material-circle-large {

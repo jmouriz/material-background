@@ -24,7 +24,9 @@ var mb = {
             primary: 0,
             secondary: 0,
             darkness: 2,
-            maxElem: 4
+            maxElem: 4,
+            bgIsLight: 0,
+            globalSkew: 0
         },
         generated: ""
     },
@@ -33,30 +35,74 @@ var mb = {
         mb.data.current.primary = Math.floor((Math.random() * mb.data.colors.length));
         mb.data.current.secondary = Math.floor((Math.random() * mb.data.colors.length));
         mb.data.current.darkness = Math.floor((Math.random() * 5));
-        mb.data.current.maxElem = Math.floor((Math.random() * 12) + 4);
+        mb.data.current.maxElem = Math.floor((Math.random() * 8) + 4);
+        mb.data.current.bgIsLight = Math.round((Math.random() * 1));
+        mb.data.current.globalSkew = Math.floor((Math.random() * 20) + 0);
 
         mb.data.elem.style.backgroundColor = mb.data.colors[mb.data.current.primary][mb.data.current.darkness];
 
         //secondary background.
-        var secondaryTrue = Math.round((Math.random() * 1));
-        if (secondaryTrue === 1) {
-            mb.genObj(0);
-        }
+        mb.genLoop();
 
         mb.data.elem.innerHTML = mb.data.generated;
     },
     genLoop: function () {
+        var loopComplete = false;
 
+        switch (mb.data.current.elemCounter) {
+            case 0:
+                var secondaryTrue = Math.round((Math.random() * 1));
+                if (secondaryTrue === 1) {
+                    mb.genObj(0);
+                }
+                loopComplete = true;
+                break;
+            case mb.data.current.maxElem - 1:
+                mb.genObj(1);
+                loopComplete = true;
+                break;
+        }
+
+        if (!loopComplete) {
+            console.log("erm");
+            mb.genObj(2);
+        }
+
+        mb.data.current.elemCounter++;
+        if (mb.data.current.elemCounter < mb.data.current.maxElem) {
+            mb.genLoop();
+        } else {
+            mb.data.elem.innerHTML = mb.data.generated;
+        }
     },
     genObj: function (obj) {
+        var zindex = mb.data.current.elemCounter;
         switch (obj) {
             case 0:
+                //generate the parallelogram secondary background.
                 var width = Math.floor((Math.random() * 60) + 30);
                 var color = mb.data.colors[mb.data.current.secondary][mb.data.current.darkness + 1];
-                mb.data.generated = "<div class='mb-parallelogram' style='width: " + width + "%;background-color: " + color + "'></div>";
+                var skew = Math.floor((Math.random() * 20) + 10);
+                mb.data.generated += "<div class='mb-parallelogram' style='z-index: " + (zindex + 1) + "; width: " + width + "%;background-color: " + color + "; transform: skewX(" + skew + "deg);'></div>";
                 break;
             case 1:
-                day = "Monday";
+                //generate the background circle.
+                var size = Math.floor((Math.random() * 400) + 200);
+                var color = mb.data.colors[mb.data.current.secondary][mb.data.current.darkness + 3];
+                var x = Math.floor((Math.random() * 100) + 1);
+                var y = Math.floor((Math.random() * 100) + 1);
+                mb.data.generated += "<div class='mb-circle' style='left: " + x + "%; top: " + y + "%; z-index: " + zindex + "; width: " + size + "px; height: " + size + "px; background-color: " + color + "'></div>";
+                break;
+            case 2:
+                //generate a horizontal background stripe.
+                var height = Math.floor((Math.random() * 140) + 80);
+                var rndDarkness = Math.floor((Math.random() * 3) + 1);
+                var color = mb.data.colors[mb.data.current.primary][mb.data.current.darkness - rndDarkness + 1];
+                if (mb.data.current.bgIsLight === 1) {
+                    var color = mb.data.colors[mb.data.current.primary][mb.data.current.darkness + rndDarkness];
+                }
+                var y = Math.floor((Math.random() * 100) + 1);
+                mb.data.generated += "<div class='mb-horizontal-stripe' style='top: " + y + "%; z-index: 0; height: " + height + "px; background-color: " + color + "; transform: skewY(" + mb.data.current.globalSkew + "deg);''></div>";
                 break;
         }
     }
