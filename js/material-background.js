@@ -82,9 +82,10 @@ var mb = {
             case 0:
                 //generate the parallelogram secondary background.
                 var width = Math.floor((Math.random() * 60) + 30);
+                var x = Math.floor((Math.random() * 40) + -30);
                 var color = mb.data.colors[mb.data.current.secondary][mb.data.current.darkness + 1];
                 var skew = Math.floor((Math.random() * 20) + 10);
-                mb.data.generated += "<div class='mb-parallelogram' style='z-index: " + (zindex + 1) + "; width: " + width + "%;background-color: " + color + "; transform: skewX(" + skew + "deg);'></div>";
+                mb.data.generated += "<div class='mb-parallelogram' style='right: " + x + "%; z-index: " + (zindex + 1) + "; width: " + width + "%;background-color: " + color + "; transform: skewX(" + skew + "deg);'></div>";
                 break;
             case 1:
                 //generate the background circle.
