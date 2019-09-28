@@ -26,7 +26,8 @@ var mb = {
             darkness: 2,
             maxElem: 4,
             bgIsLight: 0,
-            globalSkew: 0
+            globalSkew: 0,
+            allowSkewDif: 0
         },
         generated: ""
     },
@@ -39,9 +40,10 @@ var mb = {
         }
 
         mb.data.current.secondary = Math.floor((Math.random() * mb.data.colors.length));
-        mb.data.current.darkness = Math.floor((Math.random() * 5));
-        mb.data.current.maxElem = Math.floor((Math.random() * 8) + 4);
+        mb.data.current.darkness = Math.floor((Math.random() * 5) + 2);
+        mb.data.current.maxElem = Math.floor((Math.random() * 5) + 4);
         mb.data.current.bgIsLight = Math.round((Math.random() * 1));
+        mb.data.current.allowSkewDif = Math.round((Math.random() * 1));
         mb.data.current.globalSkew = Math.floor((Math.random() * 20) + 0);
         mb.data.elem.style.backgroundColor = mb.data.colors[mb.data.current.primary][mb.data.current.darkness];
 
@@ -65,8 +67,8 @@ var mb = {
         }
 
         if (!loopComplete) {
-            console.log("erm");
-            mb.genObj(2);
+            var nextElement = Math.floor((Math.random() * 2) + 2);
+            mb.genObj(nextElement);
         }
 
         mb.data.current.elemCounter++;
@@ -78,6 +80,11 @@ var mb = {
     },
     genObj: function (obj) {
         var zindex = mb.data.current.elemCounter;
+        var skewDifferent = 0;
+        if (mb.data.current.allowSkewDif) {
+            skewDifferent = Math.floor((Math.random() * 20) + -20)
+        }
+
         switch (obj) {
             case 0:
                 //generate the parallelogram secondary background.
@@ -85,7 +92,7 @@ var mb = {
                 var x = Math.floor((Math.random() * 40) + -30);
                 var color = mb.data.colors[mb.data.current.secondary][mb.data.current.darkness + 1];
                 var skew = Math.floor((Math.random() * 20) + 10);
-                mb.data.generated += "<div class='mb-parallelogram' style='right: " + x + "%; z-index: " + (zindex + 1) + "; width: " + width + "%;background-color: " + color + "; transform: skewX(" + skew + "deg);'></div>";
+                mb.data.generated += "<div class='mb-parallelogram' style='right: " + x + "%; z-index: " + (zindex + 1) + "; width: " + width + "%;background-color: " + color + "; transform: skewX(" + skew + skewDifferent + "deg);'></div>";
                 break;
             case 1:
                 //generate the background circle.
@@ -105,6 +112,17 @@ var mb = {
                 }
                 var y = Math.floor((Math.random() * 100) + 1);
                 mb.data.generated += "<div class='mb-horizontal-stripe' style='top: " + y + "%; z-index: 0; height: " + height + "px; background-color: " + color + "; transform: skewY(" + mb.data.current.globalSkew + "deg);''></div>";
+                break;
+            case 3:
+                //generate a horizontal background stripe.
+                var height = Math.floor((Math.random() * 140) + 80);
+                var rndDarkness = Math.floor((Math.random() * 3) + 1);
+                var color = mb.data.colors[mb.data.current.primary][mb.data.current.darkness - rndDarkness + 1];
+                if (mb.data.current.bgIsLight === 1) {
+                    var color = mb.data.colors[mb.data.current.primary][mb.data.current.darkness + rndDarkness];
+                }
+                var y = Math.floor((Math.random() * 100) + 1);
+                mb.data.generated += "<div class='mb-horizontal-stripe' style='top: " + y + "%; z-index: " + zindex + "; height: " + height + "px; background-color: " + color + "; transform: skewY(" + mb.data.current.globalSkew + skewDifferent + "deg);''></div>";
                 break;
         }
     }

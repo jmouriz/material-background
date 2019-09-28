@@ -107,7 +107,6 @@
                 background-position: 0% 88%
             }
         }
-
     </style>
 
     <!--[if lt IE 9]>
@@ -134,9 +133,13 @@
             </a>
         </div>
     </div>
-
-    <script src="js/material-background.js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js" integrity="sha256-w6/1B0uwkpR3uX0YUw3k2zzHnq6xDNdVZHLIdz8xV6I=" crossorigin="anonymous"></script>
+    <script src="js/material-background.js"></script>
+    <script>
+        function screenshot() {
+            html2canvas(document.querySelector("#mb")).then(canvas => {
+                document.body.appendChild(canvas)
+            });
+        }
     </script>
-</body>
-
-</html>
+</body></html>
